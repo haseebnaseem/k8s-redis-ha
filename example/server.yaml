@@ -17,6 +17,16 @@ spec:
             "volumeMounts": [{"name": "opt", "mountPath": "/opt"}]
           }]'
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - redis-server
+            topologyKey: kubernetes.io/hostname
       containers:
         - name: redis-server
           image: redis:3.2
